@@ -347,8 +347,8 @@ FROM		 [dbo].[USR_職員] AS a
 			 INNER JOIN [dbo].[MST_所属] AS c			ON c.[所属CD] = b.[所属CD]
 			 LEFT OUTER JOIN [dbo].[MST_部課] AS d		ON d.[部課CD] = b.[部課CD]
 WHERE		b.[主所属] = 1
-		-- And a.[組織] <> N'労働安全衛生総合研究所'
-		-- And a.[雇用タイプ] <> N'派遣社員'
--- ORDER BY	a.[職員ID]
-ORDER BY	[姓カナ],[名カナ]
+		And a.[組織] <> N'労働安全衛生総合研究所'
+		And a.[雇用タイプ] <> N'派遣社員'
+ORDER BY	a.[職員ID]
+-- ORDER BY	[姓カナ],[名カナ]
 
