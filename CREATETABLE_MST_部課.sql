@@ -2,7 +2,7 @@ DROP TABLE	[dbo].[MST_部課]
 
 CREATE TABLE	[dbo].[MST_部課]
 (
-		 [部課ID]			nchar(2)			NOT	NULL
+		 [部課CD]			nchar(2)			NOT	NULL
 		,[部課名]			NVARCHAR(128)		NOT NULL
 		,[登録日時]			datetime				NULL
 		,[登録者]			nvarchar(128)			NULL
@@ -10,7 +10,7 @@ CREATE TABLE	[dbo].[MST_部課]
 		,[更新者]			nvarchar(128)			NULL
 		 CONSTRAINT [PK_MST_部課] PRIMARY KEY CLUSTERED 
 		 (
-			 [部課ID] ASC
+			 [部課CD] ASC
 		 )
 		 WITH
 		 (
@@ -28,7 +28,7 @@ TRUNCATE TABLE [dbo].[MST_部課]
 
 INSERT INTO [dbo].[MST_部課]
 (
-		 [部課ID]
+		 [部課CD]
 		,[部課名]
 		,[登録日時]
 		,[登録者]

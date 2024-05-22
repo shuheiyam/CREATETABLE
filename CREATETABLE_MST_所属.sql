@@ -2,7 +2,7 @@ DROP TABLE	[dbo].[MST_所属]
 
 CREATE TABLE	[dbo].[MST_所属]
 (
-		 [所属ID]			nchar(2)			NOT	NULL
+		 [所属CD]			nchar(2)			NOT	NULL
 		,[所属名]			NVARCHAR(128)		NOT NULL
 		,[登録日時]			datetime				NULL
 		,[登録者]			nvarchar(128)			NULL
@@ -10,7 +10,7 @@ CREATE TABLE	[dbo].[MST_所属]
 		,[更新者]			nvarchar(128)			NULL
 		 CONSTRAINT [PK_MST_所属] PRIMARY KEY CLUSTERED 
 		 (
-			 [所属ID] ASC
+			 [所属CD] ASC
 		 )
 		 WITH
 		 (
@@ -29,7 +29,7 @@ TRUNCATE TABLE [dbo].[MST_所属]
 
 INSERT INTO [dbo].[MST_所属]
 (
-		 [所属ID]
+		 [所属CD]
 		,[所属名]
 		,[登録日時]
 		,[登録者]  
