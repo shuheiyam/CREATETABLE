@@ -1,3 +1,8 @@
+SELECT      *
+INTO		[dbo].[TEMP_USR_所属]
+FROM        [dbo].[USR_所属]
+
+
 DROP TABLE	[dbo].[USR_所属]
 
 CREATE TABLE	[dbo].[USR_所属]
@@ -29,6 +34,9 @@ CREATE TABLE	[dbo].[USR_所属]
 ) ON [PRIMARY]
 GO
 
+CREATE	NONCLUSTERED INDEX IX_所属CD_部課CD ON [dbo].[USR_所属]([所属CD],[部課CD])
+
+
 TRUNCATE TABLE [dbo].[USR_所属]
 
 INSERT INTO [dbo].[USR_所属]
@@ -40,18 +48,14 @@ INSERT INTO [dbo].[USR_所属]
 		,[登録日時]
 		,[登録者]
 )
-SELECT      s.[職員ID]
-           ,m.[所属CD]
-		   ,b.[部課CD]
-		   ,1
-		   ,GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time'
-		   ,N'山口（修）'
-FROM        [dbo].[USR_職員] AS s
-            JOIN [MST_所属] AS m
-            ON  s.[所属] = m.[所属名]
-			LEFT JOIN [dbo].[MST_部課] b
-			ON	b.[部課名] = s.[部課]
-
-
-SELECT      *
-FROM        [dbo].[USR_所属]
+SELECT	 [職員ID]
+		,[所属CD]
+		,[部課CD]
+		,[主所属]
+		,[所属設定日]
+		,[所属終了日]
+		,[登録日時]
+		,[登録者]
+		,[更新日時]
+		,[更新者]
+FROM	 [dbo].[TEMP_USR_所属]

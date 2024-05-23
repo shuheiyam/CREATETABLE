@@ -24,6 +24,8 @@ CREATE TABLE	[dbo].[MST_部課]
 ) ON [PRIMARY]
 GO
 
+CREATE NONCLUSTERED INDEX IX_部課CD_部課名		ON [dbo].[MST_部課]([部課CD],[部課名])
+
 TRUNCATE TABLE [dbo].[MST_部課]
 
 INSERT INTO [dbo].[MST_部課]

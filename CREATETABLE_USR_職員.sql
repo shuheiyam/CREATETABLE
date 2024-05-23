@@ -48,7 +48,11 @@ CREATE TABLE	[dbo].[USR_職員]
 ) ON [PRIMARY]
 GO
 
-CREATE		  INDEX IDX_表示名		ON [dbo].[USR_職員]([表示名])
+CREATE	UNIQUE			INDEX [IX_職員ID]		ON [dbo].[USR_職員]([職員ID] ASC)
+CREATE					INDEX [IX_表示名]		ON [dbo].[USR_職員]([表示名])
+CREATE	NONCLUSTERED	INDEX [IX_姓名]			ON [dbo].[USR_職員]([姓],[名]) 
+CREATE	NONCLUSTERED	INDEX [IX_姓名カナ]		ON [dbo].[USR_職員]([姓カナ],[名カナ]) 
+CREATE	NONCLUSTERED	INDEX [IX_FullName]		ON [dbo].[USR_職員]([FamilyName],[FirstName])
 
 
 TRUNCATE TABLE [dbo].[USR_職員]

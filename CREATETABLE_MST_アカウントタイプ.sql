@@ -24,6 +24,7 @@ CREATE TABLE	[dbo].[MST_アカウントタイプ]
 ) ON [PRIMARY]
 GO
 
+CREATE INDEX IX_アカウントタイプ ON [dbo].[MST_アカウントタイプ]([アカウントタイプ])
 
 TRUNCATE TABLE [dbo].[MST_アカウントタイプ]
 

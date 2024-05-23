@@ -24,6 +24,7 @@ CREATE TABLE	[dbo].[MST_所属]
 ) ON [PRIMARY]
 GO
 
+CREATE	NONCLUSTERED	INDEX	IX_所属CD_所属名	ON [dbo].[MST_所属]([所属CD],[所属名])
 
 TRUNCATE TABLE [dbo].[MST_所属]
 
