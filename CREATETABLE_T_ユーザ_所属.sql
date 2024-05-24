@@ -1,10 +1,6 @@
-SELECT      *
-INTO		[dbo].[TEMP_USR_所属]
-FROM        [dbo].[USR_所属]
+DROP TABLE	[dbo].[T_ユーザ_所属]
 
-DROP TABLE	[dbo].[T_所属]
-
-CREATE TABLE	[dbo].[T_所属]
+CREATE TABLE	[dbo].[T_ユーザ_所属]
 (
 		 [AutoNumberID]		int IDENTITY(1,1)	NOT NULL
 		,[ユーザID]			int					NOT NULL
@@ -17,7 +13,7 @@ CREATE TABLE	[dbo].[T_所属]
 		,[登録者]			nvarchar(128)			NULL
 		,[更新日時]			datetime				NULL
 		,[更新者]			nvarchar(128)			NULL
-		 CONSTRAINT [PK_T_所属] PRIMARY KEY CLUSTERED 
+		 CONSTRAINT [PK_T_ユーザ_所属] PRIMARY KEY CLUSTERED 
 		 (
 			 [AutoNumberID] ASC
 		 )
@@ -33,12 +29,12 @@ CREATE TABLE	[dbo].[T_所属]
 ) ON [PRIMARY]
 GO
 
-CREATE	NONCLUSTERED INDEX IX_所属ID_部課ID ON [dbo].[T_所属]([部局ID],[部課ID])
+CREATE	NONCLUSTERED INDEX IX_所属ID_部課ID ON [dbo].[T_ユーザ_所属]([部局ID],[部課ID])
 
+/*
+TRUNCATE TABLE [dbo].[T_ユーザ_所属]
 
-TRUNCATE TABLE [dbo].[T_所属]
-
-INSERT INTO [dbo].[T_所属]
+INSERT INTO [dbo].[T_ユーザ_所属]
 (
 		 [ユーザID]
 		,[部局ID]
@@ -57,4 +53,6 @@ FROM	 [dbo].[TEMP_USR_所属]
 
 
 SELECT	*
-FROM	[dbo].[T_所属]
+FROM	[dbo].[T_ユーザ_所属]
+*/
+

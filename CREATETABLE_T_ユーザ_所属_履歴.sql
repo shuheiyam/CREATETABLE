@@ -1,6 +1,6 @@
-DROP TABLE	[dbo].[T_所属履歴]
+DROP TABLE	[dbo].[T_ユーザ_所属_履歴]
 
-CREATE TABLE	[dbo].[T_所属履歴]
+CREATE TABLE	[dbo].[T_ユーザ_所属_履歴]
 (
          [AutoNumberID]     INT IDENTITY(1,1)   NOT NULL
 		,[職員ID]			int			        NOT NULL
@@ -13,7 +13,7 @@ CREATE TABLE	[dbo].[T_所属履歴]
 		,[登録者]			nvarchar(128)			NULL
 		,[更新日時]			datetime				NULL
 		,[更新者]			nvarchar(128)			NULL
-		 CONSTRAINT [PK_T_所属履歴] PRIMARY KEY CLUSTERED 
+		 CONSTRAINT [PK_T_ユーザ_所属_履歴] PRIMARY KEY CLUSTERED 
 		 (
 			 [AutoNumberID] ASC
 		 )
@@ -29,6 +29,7 @@ CREATE TABLE	[dbo].[T_所属履歴]
 ) ON [PRIMARY]
 GO
 
-
+/*
 SELECT      *
-FROM        [dbo].[T_所属履歴]
+FROM        [dbo].[T_ユーザ_所属_履歴]
+*/

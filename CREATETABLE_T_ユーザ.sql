@@ -1,8 +1,3 @@
-SELECT	*
-INTO	[dbo].[TEMP_USR_職員]
-FROM	[dbo].[USR_職員]
-
-
 DROP TABLE	[dbo].[T_ユーザ]
 
 CREATE TABLE	[dbo].[T_ユーザ]
@@ -21,8 +16,8 @@ CREATE TABLE	[dbo].[T_ユーザ]
 		,[PHS]					nchar(4)					NULL
 		,[UserPrincipalName]	nvarchar(128)				NULL
 		,[Email]				nvarchar(128)				NULL	
-		,[雇用タイプ]			nvarchar(64)				NULL
-		,[職位]					nvarchar(64)				NULL
+		-- ,[雇用タイプ]			nvarchar(64)				NULL
+		-- ,[職位]					nvarchar(64)				NULL
 		,[組織]					NVARCHAR(128)				NULL
 		,[着任日]				date						NULL
 		,[退職日]				date						NULL
@@ -48,10 +43,10 @@ CREATE TABLE	[dbo].[T_ユーザ]
 GO
 
 
-CREATE					INDEX [IX_表示名]		ON [dbo].[T_ユーザ]([表示名])
-CREATE	NONCLUSTERED	INDEX [IX_姓名]			ON [dbo].[T_ユーザ]([姓],[名]) 
-CREATE	NONCLUSTERED	INDEX [IX_姓名カナ]		ON [dbo].[T_ユーザ]([姓カナ],[名カナ]) 
-CREATE	NONCLUSTERED	INDEX [IX_FullName]		ON [dbo].[T_ユーザ]([FamilyName],[FirstName])
+CREATE					INDEX [IX_表示名]				ON [dbo].[T_ユーザ]([表示名])
+CREATE	NONCLUSTERED	INDEX [IX_姓名]					ON [dbo].[T_ユーザ]([姓],[名]) 
+CREATE	NONCLUSTERED	INDEX [IX_姓名カナ]				ON [dbo].[T_ユーザ]([姓カナ],[名カナ]) 
+CREATE	NONCLUSTERED	INDEX [IX_FullName]				ON [dbo].[T_ユーザ]([FamilyName],[FirstName])
 
 /*
 TRUNCATE TABLE [dbo].[T_ユーザ]
@@ -71,8 +66,8 @@ INSERT [dbo].[T_ユーザ]
 		,[PHS]
 		,[UserPrincipalName]
 		,[Email]
-		,[雇用タイプ]
-		,[職位]
+		-- ,[雇用タイプ]
+		-- ,[職位]
 		,[組織]
 		-- ,[着任日]
 		-- ,[退職日]
@@ -94,18 +89,14 @@ SELECT	 [SyncUser]
 		,[PHS]
 		,[UserPrincipalName]
 		,[Email]
-		,[雇用タイプ]
-		,[職位]
+		-- ,[雇用タイプ]
+		-- ,[職位]
 		,[組織]
 		,[登録日時]
 		,[登録者]
 		,[更新日時]
 		,[更新者]
 FROM	 [dbo].[TEMP_USR_職員]
-
-SELECT		*
-FROM		[dbo].[T_ユーザ]
-
 
 -- 結合例
 
@@ -114,11 +105,41 @@ WITH Kyositu AS
 	SELECT	 a.[ユーザID]
 			,b.[建物名]
 			,c.[部屋名]
-	FROM	 [dbo].[T_居室] a
+	FROM	 [dbo].[T_ユーザ_居室] a
 			 JOIN [dbo].[T_建物] b
 			 ON		b.[建物ID] = a.[建物ID]
 			 LEFT JOIN [dbo].[T_部屋] c 
-			 ON		c.[部屋ID] = a.[居室ID]
+			 ON		c.[部屋ID] = a.[部屋ID]
+)
+,KoyoType AS
+(
+	SELECT		a.[ユーザID]
+			   ,a.[雇用タイプID]
+			   ,b.[雇用タイプ名称]
+	FROM		[dbo].[T_ユーザ_雇用タイプ] AS a 
+				JOIN [dbo].[T_雇用タイプ] AS b 
+				ON		b.[雇用タイプID] = a.[雇用タイプID]
+)
+,Syozoku AS
+(
+	SELECT		a.[ユーザID]
+			   ,b.[部局名]
+			   ,c.[部課名]
+	FROM		[dbo].[T_ユーザ_所属] AS a
+				JOIN [dbo].[T_部局] AS b
+				ON		b.[部局ID] = a.[部局ID]
+				LEFT JOIN [dbo].[T_部課] AS c
+				ON		c.[部課ID] = a.[部課ID]
+	WHERE		a.[主所属] = 1
+)
+,Syokui AS
+(
+	SELECT		a.[ユーザID]
+			   ,a.[職位ID]
+			   ,b.[職位名称]
+	FROM		[dbo].[T_ユーザ_職位] AS a
+				LEFT JOIN [dbo].[T_職位] AS b
+				ON		a.[職位ID] = b.[職位ID]
 )
 SELECT		 a.[ユーザID]
 			,a.[SyncUser]
@@ -130,17 +151,17 @@ SELECT		 a.[ユーザID]
 			,a.[FamilyName]
 			,a.[FirstName]
 			,a.[表示名]
-			,a.[雇用タイプ]
-			,a.[職位]
+			,c.[雇用タイプ名称]		AS 雇用タイプ
+			,e.[職位名称]			AS 職位
 			,a.[組織]
-			,c.[部局名]			AS 所属名
-			,d.[部課名]
+			,b.[部局名]				AS 所属名
+			,b.[部課名]
 			,a.[固定電話内線]
 			,a.[PHS]
 			,a.[UserPrincipalName]
 			,a.[Email]
-			,e.[建物名]
-			,e.[部屋名]			AS 居室名
+			,d.[建物名]
+			,d.[部屋名]			AS 居室名
 			,a.[着任日]
 			,a.[退職日]
 			,a.[登録日時]
@@ -149,14 +170,10 @@ SELECT		 a.[ユーザID]
 			,a.[更新者]
 			,a.[備考]
 FROM		 [dbo].[T_ユーザ] AS a
-			 INNER JOIN [dbo].[T_所属] AS b		 	ON b.[ユーザID] = a.[ユーザID]
-			 INNER JOIN [dbo].[T_部局] AS c			ON c.[部局ID] = b.[部局ID]
-			 LEFT OUTER JOIN [dbo].[T_部課] AS d	ON d.[部課ID] = b.[部課ID]
-			 LEFT OUTER JOIN kyositu e 				ON e.[ユーザID] = a.[ユーザID]
-WHERE		b.[主所属] = 1
-		-- And a.[組織] <> N'労働安全衛生総合研究所'
-		-- And a.[雇用タイプ] <> N'派遣社員'
+			 INNER JOIN Syozoku AS b 		ON b.[ユーザID] = a.[ユーザID]
+			 INNER JOIN KoyoType AS c		ON c.[ユーザID] = a.[ユーザID]
+			 LEFT OUTER JOIN kyositu d 		ON d.[ユーザID] = a.[ユーザID]
+			 LEFT OUTER JOIN Syokui e		ON e.[ユーザID] = a.[ユーザID]
 ORDER BY	a.[ユーザID]
--- ORDER BY	[姓カナ],[名カナ]
 
 */

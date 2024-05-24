@@ -26,6 +26,7 @@ GO
 
 CREATE	NONCLUSTERED	INDEX	IX_建物ID_建物名	ON [dbo].[T_建物]([建物ID],[建物名])
 
+/*
 TRUNCATE TABLE [dbo].[T_建物]
 
 INSERT INTO [dbo].[T_建物]
@@ -42,8 +43,6 @@ VALUES
 ,(N'流動棟',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',N'山口（修）')
 ,(N'湘南アイパーク',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',N'山口（修）')
 
-
-/*
 SELECT	*
 FROM	[dbo].[T_建物]
 */

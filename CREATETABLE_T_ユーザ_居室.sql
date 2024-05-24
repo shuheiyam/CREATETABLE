@@ -3,19 +3,19 @@ INTO	[dbo].[TEMP_USR_居室]
 FROM	[dbo].[USR_居室]
 
 
-DROP TABLE	[dbo].[T_居室]
+DROP TABLE	[dbo].[T_ユーザ_居室]
 
-CREATE TABLE	[dbo].[T_居室]
+CREATE TABLE	[dbo].[T_ユーザ_居室]
 (
 		 [AutoNumberID]		int IDENTITY(1,1)	NOT NULL
 		,[ユーザID]			int					NOT NULL
-		,[建物ID]			nchar(2)			NOT	NULL
-		,[居室ID]			NCHAR(2)				NULL
+		,[建物ID]			int					NOT	NULL
+		,[部屋ID]			int						NULL
 		,[登録日時]			datetime				NULL
 		,[登録者]			nvarchar(128)			NULL
 		,[更新日時]			datetime				NULL
 		,[更新者]			nvarchar(128)			NULL
-		 CONSTRAINT [PK_T_居室] PRIMARY KEY CLUSTERED 
+		 CONSTRAINT [PK_T_ユーザ_居室] PRIMARY KEY CLUSTERED 
 		 (
 			 [AutoNumberID] ASC
 		 )
@@ -31,16 +31,16 @@ CREATE TABLE	[dbo].[T_居室]
 ) ON [PRIMARY]
 GO
 
-CREATE	NONCLUSTERED INDEX IX_建物ID_居室ID ON [dbo].[T_居室]([建物ID],[居室ID])
+CREATE	NONCLUSTERED INDEX IX_建物ID_居室ID ON [dbo].[T_ユーザ_居室]([建物ID],[部屋ID])
 
+/*
+TRUNCATE TABLE [dbo].[T_ユーザ_居室]
 
-TRUNCATE TABLE [dbo].[T_居室]
-
-INSERT INTO [dbo].[T_居室]
+INSERT INTO [dbo].[T_ユーザ_居室]
 (
 		 [ユーザID]
 		,[建物ID]
-		,[居室ID]
+		,[部屋ID]
 		,[登録日時]
 		,[登録者]
 )
@@ -57,4 +57,5 @@ FROM	 [dbo].[TEMP_USR_職員] a
 
 
 SELECT		*
-FROM		 [dbo].[T_居室]
+FROM		 [dbo].[T_ユーザ_居室]
+*/

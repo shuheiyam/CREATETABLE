@@ -26,6 +26,7 @@ GO
 
 CREATE NONCLUSTERED INDEX IX_部課ID_部課名		ON [dbo].[T_部課]([部課ID],[部課名])
 
+/*
 TRUNCATE TABLE [dbo].[T_部課]
 
 INSERT INTO [dbo].[T_部課]
@@ -51,3 +52,4 @@ VALUES
 
 SELECT	*
 FROM	[dbo].[T_部課]
+*/

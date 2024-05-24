@@ -26,6 +26,7 @@ GO
 
 CREATE	NONCLUSTERED	INDEX	IX_部局ID_部局名	ON [dbo].[T_部局]([部局ID],[部局名])
 
+/*
 TRUNCATE TABLE [dbo].[T_部局]
 
 INSERT INTO [dbo].[T_部局]
@@ -56,6 +57,6 @@ VALUES
 ,(N'警備',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',N'山口（修）')
 
 
-
 SELECT	*
 FROM	[dbo].[T_部局]
+*/

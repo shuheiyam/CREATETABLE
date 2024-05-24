@@ -22,6 +22,7 @@ CREATE TABLE	[dbo].[T_雇用タイプ]
 ) ON [PRIMARY]
 GO
 
+/*
 TRUNCATE TABLE [dbo].[T_雇用タイプ]
 
 INSERT INTO [dbo].[T_雇用タイプ]
@@ -44,7 +45,8 @@ VALUES
 ,(N'非常勤職員',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',N'山口(修)')
 ,(N'本省出向',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',N'山口(修)')
 
-
 SELECT		*
 FROM		[dbo].[T_雇用タイプ]
 ORDER BY	[雇用タイプID]
+
+*/

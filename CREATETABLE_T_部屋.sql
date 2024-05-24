@@ -28,6 +28,7 @@ GO
 
 CREATE	NONCLUSTERED	INDEX	IX_部屋ID_居室名	ON [dbo].[T_部屋]([部屋ID],[部屋名])
 
+/*
 TRUNCATE TABLE [dbo].[T_部屋]
 
 INSERT INTO [dbo].[T_部屋]
@@ -82,7 +83,7 @@ VALUES
 ,(N'522-1',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',N'山口（修）')
 ,(N'B44E',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',N'山口（修）')
 
-
-
 SELECT	*
 FROM	[dbo].[T_部屋]
+
+*/
