@@ -104,7 +104,10 @@ SELECT	 [SyncUser]
 		,a.[登録日時]
 		,160
 		,a.[更新日時]
-		,160
+		,CASE
+			WHEN a.[更新者] IS NOT NULL THEN 160
+			ELSE NULL
+		 END				AS 更新者ID
 		-- ,[備考]
 FROM	 [dbo].[TEMP_USR_職員] AS a
 		 LEFT JOIN [dbo].[T_固定電話内線] b 	ON b.固定電話内線番号 = a.固定電話内線
@@ -149,9 +152,9 @@ SELECT	 [SyncUser]
 		,[着任日]
 		,[退職日]
 		,a.[登録日時]
-		,a.更新者ID
+		,a.登録者ID
 		,a.[更新日時]
-		,b.更新者ID
+		,a.更新者ID
 		-- ,[備考]
 FROM		 [dbo].[T_職員] AS a
 			 LEFT JOIN dbo.T_固定電話内線 b 	ON b.固定電話内線ID = a.固定電話内線ID
@@ -167,3 +170,7 @@ SELECT		*
 FROM		[dbo].[T_職員] AS a
 
 */
+
+
+SELECT		*
+FROM 		dbo.TEMP_USR_職員
