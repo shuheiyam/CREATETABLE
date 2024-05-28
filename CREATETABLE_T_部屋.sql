@@ -4,6 +4,7 @@ CREATE TABLE	[dbo].[T_部屋]
 (
 		 [部屋ID]			int IDENTITY(1,1)	NOT	NULL
 		,[部屋名]			NVARCHAR(128)		NOT NULL
+		,[固定電話ID]		INT						NULL
 		,[登録日時]			datetime				NULL
 		,[登録者ID]			int 					NULL
 		,[更新日時]			datetime				NULL
@@ -26,7 +27,6 @@ GO
 
 CREATE	NONCLUSTERED	INDEX	IX_部屋ID_居室名	ON [dbo].[T_部屋]([部屋ID],[部屋名])
 
-/*
 TRUNCATE TABLE [dbo].[T_部屋]
 
 INSERT INTO [dbo].[T_部屋]
@@ -81,7 +81,22 @@ VALUES
 ,(N'522-1',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
 ,(N'B44E',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
 
+
+SELECT		a.*
+FROM 		[dbo].[TEMP_USR_職員] AS a 
+WHERE		a.[居室] IS NULL
+		And a.[固定電話内線] IS NOT NULL
+
+SELECT		a.組織名称
+FROM 		[dbo].[T_組織] AS a
+WHERE		a.組織名称 LIKE N'%株式%'
+
+SELECT		a.[居室], a.[固定電話内線]
+FROM 		[dbo].[TEMP_USR_職員] AS a 
+WHERE		a.[居室] IS NULL
+GROUP BY	a.[居室], a.[固定電話内線]
+ORDER BY	a.[居室], a.[固定電話内線]
+
 SELECT	*
 FROM	[dbo].[T_部屋]
 
-*/

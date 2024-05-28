@@ -45,10 +45,10 @@ CREATE TABLE	[dbo].[T_職員]
 GO
 
 
-CREATE					INDEX [IX_表示名]				ON [dbo].[T_職員]([表示名])
-CREATE	NONCLUSTERED	INDEX [IX_姓名]					ON [dbo].[T_職員]([姓],[名]) 
-CREATE	NONCLUSTERED	INDEX [IX_姓名カナ]				ON [dbo].[T_職員]([姓カナ],[名カナ]) 
-CREATE	NONCLUSTERED	INDEX [IX_FullName]				ON [dbo].[T_職員]([FamilyName],[FirstName])
+CREATE					INDEX [IX_表示名]			ON [dbo].[T_職員]([表示名])
+CREATE	NONCLUSTERED	INDEX [IX_姓名]				ON [dbo].[T_職員]([姓],[名]) 
+CREATE	NONCLUSTERED	INDEX [IX_姓名カナ]			ON [dbo].[T_職員]([姓カナ],[名カナ]) 
+CREATE	NONCLUSTERED	INDEX [IX_FullName]			ON [dbo].[T_職員]([FamilyName],[FirstName])
 
 /*
 TRUNCATE TABLE [dbo].[T_職員]
