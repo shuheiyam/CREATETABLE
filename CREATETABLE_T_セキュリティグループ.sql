@@ -98,6 +98,8 @@ VALUES
 ,(N'査察室',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
 ,(N'旧バイオアーカイブ',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
 
-SELECT	*
-FROM	[dbo].[T_セキュリティグループ]
 */
+
+SELECT	a.セキュリティグループ名
+       ,a.セキュリティグループID
+FROM	[dbo].[T_セキュリティグループ] AS a
