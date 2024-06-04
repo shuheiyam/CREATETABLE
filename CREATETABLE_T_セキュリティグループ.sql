@@ -103,3 +103,4 @@ VALUES
 SELECT	a.セキュリティグループ名
        ,a.セキュリティグループID
 FROM	[dbo].[T_セキュリティグループ] AS a
+WHERE	a.セキュリティグループ名 LIKE N'%有害%'

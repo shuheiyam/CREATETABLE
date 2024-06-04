@@ -1,8 +1,9 @@
-DROP TABLE	[dbo].[T_職員]
+DROP TABLE	[dbo].[T_職員_履歴]
 
-CREATE TABLE	[dbo].[T_職員]
+CREATE TABLE	[dbo].[T_職員_履歴]
 (
-		 [職員ID]				INT	IDENTITY(1,1)		NOT NULL
+         [AutoNumberID]         int IDENTITY(1,1)       NOT NULL
+		,[職員ID]				INT	IDENTITY(1,1)		NOT NULL
 		,[SyncUser]				BIT						NOT NULL
 		,[有効]					bit						NOT NULL
 		,[姓]					nvarchar(64)				NULL	-- 姓
@@ -14,23 +15,23 @@ CREATE TABLE	[dbo].[T_職員]
 		,[表示名]				NVARCHAR(128)				NULL
 		,[固定電話内線ID]		INT							NULL
 		,[PHS]					nchar(4)					NULL
-		,[UserPrincipalName]	nvarchar(128)				NULL
+		-- ,[UserPrincipalName]	nvarchar(128)				NULL
 		,[Email]				nvarchar(128)				NULL	
 		,[雇用状態ID]			int							NULL
 		,[職位ID]				int							NULL
 		,[建物ID]				int 						NULL
 		,[居室ID]				int							NULL
 		,[組織ID]				INT							NULL
-		,[着任日]				date						NULL
+		-- ,[着任日]				date						NULL
 		,[適用日]				date						NULL
-		,[登録日時]				datetime					NULL
-		,[登録者ID]				int							NULL
+		-- ,[登録日時]				datetime					NULL
+		-- ,[登録者ID]				int							NULL
 		,[更新日時]				datetime					NULL
 		,[更新者ID]				int							NULL
 		,[備考]					NVARCHAR(max)				NULL
-		 CONSTRAINT [PK_T_職員] PRIMARY KEY CLUSTERED 
+		 CONSTRAINT [PK_T_職員_履歴] PRIMARY KEY CLUSTERED 
 		 (
-			 [職員ID] ASC
+			 [AutoNumberID] ASC
 		 )
 		 WITH
 		 (
@@ -45,15 +46,15 @@ CREATE TABLE	[dbo].[T_職員]
 GO
 
 
-CREATE					INDEX [IX_表示名]			ON [dbo].[T_職員]([表示名])
-CREATE	NONCLUSTERED	INDEX [IX_姓名]				ON [dbo].[T_職員]([姓],[名]) 
-CREATE	NONCLUSTERED	INDEX [IX_姓名カナ]			ON [dbo].[T_職員]([姓カナ],[名カナ]) 
-CREATE	NONCLUSTERED	INDEX [IX_FullName]			ON [dbo].[T_職員]([FamilyName],[FirstName])
+CREATE					INDEX [IX_表示名]			ON [dbo].[T_職員_履歴]([表示名])
+CREATE	NONCLUSTERED	INDEX [IX_姓名]				ON [dbo].[T_職員_履歴]([姓],[名]) 
+CREATE	NONCLUSTERED	INDEX [IX_姓名カナ]			ON [dbo].[T_職員_履歴]([姓カナ],[名カナ]) 
+CREATE	NONCLUSTERED	INDEX [IX_FullName]			ON [dbo].[T_職員_履歴]([FamilyName],[FirstName])
 
 /*
-TRUNCATE TABLE [dbo].[T_職員]
+TRUNCATE TABLE [dbo].[T_職員_履歴]
 
-INSERT [dbo].[T_職員]
+INSERT [dbo].[T_職員_履歴]
 (
 		 [SyncUser]
 		,[有効]
@@ -121,7 +122,7 @@ WITH Syozoku AS
 	SELECT		a.[職員ID]
 			   ,b.[部局名]
 			   ,c.[部課名]
-	FROM		[dbo].[T_職員_所属] AS a
+	FROM		[dbo].[T_職員_履歴_所属] AS a
 				JOIN [dbo].[T_部局] AS b
 				ON		b.[部局ID] = a.[部局ID]
 				LEFT JOIN [dbo].[T_部課] AS c
@@ -153,7 +154,7 @@ SELECT	 [SyncUser]
 		,a.[更新日時]
 		,a.更新者ID
 		-- ,[備考]
-FROM		 [dbo].[T_職員] AS a
+FROM		 [dbo].[T_職員_履歴] AS a
 			 LEFT JOIN dbo.T_固定電話内線 b 	ON b.固定電話内線ID = a.固定電話内線ID
 			 LEFT JOIN dbo.T_雇用状態 c 		ON c.雇用状態ID = a.雇用状態ID
 			 LEFT JOIN dbo.T_職位 d 			ON d.職位ID = a.職位ID
@@ -165,6 +166,6 @@ ORDER BY	a.[職員ID]
 */
 
 SELECT		*
-FROM		[dbo].[T_職員] AS a
+FROM		[dbo].[T_職員_履歴] AS a
 WHERE		a.表示名 LIKE N'%岩瀬%'
 

@@ -716,6 +716,18 @@ VALUES
 ,( 197 ,0, 8 ,GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
 ,( 197 ,0, 6 ,GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
 
+INSERT INTO [dbo].[T_職員_セキュリティグループ]
+(
+		 [職員ID]
+        ,[主所属]
+		,[セキュリティグループID]
+		,[登録日時]
+		,[登録者ID]
+)
+VALUES
+ ( 56 ,0, 10 ,GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
+
+*/
 SELECT	b.表示名
        ,c.[セキュリティグループ名]
 FROM	[dbo].[T_職員_セキュリティグループ] AS a
@@ -723,7 +735,7 @@ FROM	[dbo].[T_職員_セキュリティグループ] AS a
         ON      b.職員ID = a.職員ID
         JOIN [dbo].[T_セキュリティグループ] AS c 
         ON      c.[セキュリティグループID] = a.セキュリティグループID
-WHERE   a.職員ID = 1
-ORDER BY a.セキュリティグループID
+-- WHERE   a.職員ID IN (56)
+WHERE	c.セキュリティグループID = 10
+ORDER BY a.職員ID, a.セキュリティグループID
 
-*/
