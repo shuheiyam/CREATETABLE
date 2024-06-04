@@ -166,5 +166,5 @@ ORDER BY	a.[職員ID]
 
 SELECT		*
 FROM		[dbo].[T_職員] AS a
-WHERE		a.表示名 LIKE N'%岩瀬%'
+WHERE		a.表示名 LIKE N'%柳場%'
 

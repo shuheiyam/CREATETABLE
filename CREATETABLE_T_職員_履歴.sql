@@ -3,7 +3,7 @@ DROP TABLE	[dbo].[T_職員_履歴]
 CREATE TABLE	[dbo].[T_職員_履歴]
 (
          [AutoNumberID]         int IDENTITY(1,1)       NOT NULL
-		,[職員ID]				INT	IDENTITY(1,1)		NOT NULL
+		,[職員ID]				INT	                	NOT NULL
 		,[SyncUser]				BIT						NOT NULL
 		,[有効]					bit						NOT NULL
 		,[姓]					nvarchar(64)				NULL	-- 姓
@@ -23,11 +23,11 @@ CREATE TABLE	[dbo].[T_職員_履歴]
 		,[居室ID]				int							NULL
 		,[組織ID]				INT							NULL
 		-- ,[着任日]				date						NULL
-		,[適用日]				date						NULL
+		-- ,[適用日]				date						NULL
 		-- ,[登録日時]				datetime					NULL
 		-- ,[登録者ID]				int							NULL
-		,[更新日時]				datetime					NULL
-		,[更新者ID]				int							NULL
+		,[履歴作成日時]				datetime					NULL
+		,[履歴作成者ID]				int							NULL
 		,[備考]					NVARCHAR(max)				NULL
 		 CONSTRAINT [PK_T_職員_履歴] PRIMARY KEY CLUSTERED 
 		 (
@@ -50,122 +50,4 @@ CREATE					INDEX [IX_表示名]			ON [dbo].[T_職員_履歴]([表示名])
 CREATE	NONCLUSTERED	INDEX [IX_姓名]				ON [dbo].[T_職員_履歴]([姓],[名]) 
 CREATE	NONCLUSTERED	INDEX [IX_姓名カナ]			ON [dbo].[T_職員_履歴]([姓カナ],[名カナ]) 
 CREATE	NONCLUSTERED	INDEX [IX_FullName]			ON [dbo].[T_職員_履歴]([FamilyName],[FirstName])
-
-/*
-TRUNCATE TABLE [dbo].[T_職員_履歴]
-
-INSERT [dbo].[T_職員_履歴]
-(
-		 [SyncUser]
-		,[有効]
-		,[姓]
-		,[名]
-		,[姓カナ]
-		,[名カナ]
-		,[FamilyName]
-		,[FirstName]
-		,[表示名]
-		,[固定電話内線ID]
-		,[PHS]
-		,[UserPrincipalName]
-		,[Email]
-		,[雇用状態ID]
-		,[職位ID]
-		,[建物ID]
-		,[居室ID]
-		,[組織ID]
-		-- ,[着任日]
-		-- ,[適用日]
-		,[登録日時]
-		,[登録者ID]
-		,[更新日時]
-		,[更新者ID]
-		-- ,[備考]
-)
-SELECT	 [SyncUser]
-		,[有効]
-		,[姓]
-		,[名]
-		,[姓カナ]
-		,[名カナ]
-		,[FamilyName]
-		,[FirstName]
-		,[表示名]
-		,b.[固定電話内線ID]
-		,[PHS]
-		,[UserPrincipalName]
-		,[Email]
-		,c.[雇用状態ID]
-		,d.[職位ID]
-		,e.[建物ID]
-		,f.部屋ID
-		,g.[組織ID]
-		-- ,[着任日]
-		-- ,[退職日]
-		,GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time'
-		,160
-		,NULL
-		,NULL
-		-- ,[備考]
-FROM	 [dbo].[TEMP_USR_職員] AS a
-		 LEFT JOIN [dbo].[T_固定電話内線] b 	ON b.固定電話内線番号 = a.固定電話内線
-		 LEFT JOIN [dbo].[T_雇用状態] AS c	ON	c.雇用状態名称 = a.雇用タイプ
-		 LEFT JOIN [dbo].[T_職位] AS d			ON	d.職位名称 = a.職位
-		 LEFT JOIN [dbo].T_建物 AS e 			ON	e.建物名 = a.建物
-		 LEFT JOIN [dbo].T_部屋 f 				ON	f.部屋名 = a.居室
-		 LEFT JOIN [dbo].T_組織 g 				ON g.組織名称 = a.組織
-
--- 結合例
-
-WITH Syozoku AS
-(
-	SELECT		a.[職員ID]
-			   ,b.[部局名]
-			   ,c.[部課名]
-	FROM		[dbo].[T_職員_履歴_所属] AS a
-				JOIN [dbo].[T_部局] AS b
-				ON		b.[部局ID] = a.[部局ID]
-				LEFT JOIN [dbo].[T_部課] AS c
-				ON		c.[部課ID] = a.[部課ID]
-	WHERE		a.[主所属] = 1
-)
-SELECT	 [SyncUser]
-		,[有効]
-		,[姓]
-		,[名]
-		,[姓カナ]
-		,[名カナ]
-		,[FamilyName]
-		,[FirstName]
-		,[表示名]
-		,b.固定電話内線番号
-		,[PHS]
-		,[UserPrincipalName]
-		,[Email]
-		,c.雇用状態名称			AS 雇用状態
-		,d.職位名称				AS 職位
-		,e.建物名				AS 建物
-		,f.部屋名称				AS 居室			
-		,g.組織名称
-		,[着任日]
-		,[適用日]
-		,a.[登録日時]
-		,a.登録者ID
-		,a.[更新日時]
-		,a.更新者ID
-		-- ,[備考]
-FROM		 [dbo].[T_職員_履歴] AS a
-			 LEFT JOIN dbo.T_固定電話内線 b 	ON b.固定電話内線ID = a.固定電話内線ID
-			 LEFT JOIN dbo.T_雇用状態 c 		ON c.雇用状態ID = a.雇用状態ID
-			 LEFT JOIN dbo.T_職位 d 			ON d.職位ID = a.職位ID
-			 LEFT JOIN dbo.T_建物 e 			ON e.建物ID = a.建物ID
-			 LEFT JOIN dbo.T_部屋 f 			ON f.部屋ID = a.居室ID
-			 LEFT JOIN dbo.T_組織 g 			ON g.組織ID = a.組織ID
-ORDER BY	a.[職員ID]
-
-*/
-
-SELECT		*
-FROM		[dbo].[T_職員_履歴] AS a
-WHERE		a.表示名 LIKE N'%岩瀬%'
 

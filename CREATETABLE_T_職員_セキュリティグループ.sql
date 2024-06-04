@@ -725,7 +725,7 @@ INSERT INTO [dbo].[T_職員_セキュリティグループ]
 		,[登録者ID]
 )
 VALUES
- ( 56 ,0, 10 ,GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
+ ( 54 ,0, 10 ,GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
 
 */
 SELECT	b.表示名

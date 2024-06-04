@@ -85,7 +85,6 @@ VALUES
 
 SELECT	*
 FROM	[dbo].[T_部屋]
-
 */
 
 
