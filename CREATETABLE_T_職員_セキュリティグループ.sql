@@ -730,7 +730,7 @@ VALUES
 */
 SELECT	    b.職員ID
 		   ,b.表示名
-    	   ,c.[セキュリティグループ名]
+    	   ,c.[セキュリティグループ名称]
 FROM		[dbo].[T_職員_セキュリティグループ] AS a
     	    JOIN [dbo].[T_職員] AS b 
     	    ON      b.職員ID = a.職員ID

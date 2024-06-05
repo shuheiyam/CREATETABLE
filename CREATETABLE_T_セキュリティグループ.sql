@@ -3,7 +3,7 @@ DROP TABLE	[dbo].[T_セキュリティグループ]
 CREATE TABLE	[dbo].[T_セキュリティグループ]
 (
 		 [セキュリティグループID]	int IDENTITY(1,1)	NOT	NULL
-		,[セキュリティグループ名]	NVARCHAR(128)		NOT NULL
+		,[セキュリティグループ名称]	NVARCHAR(128)		NOT NULL
 		,[登録日時]	        		datetime				NULL
 		,[登録者ID]		        	int 					NULL
 		,[更新日時]		        	datetime				NULL
@@ -24,14 +24,14 @@ CREATE TABLE	[dbo].[T_セキュリティグループ]
 ) ON [PRIMARY]
 GO
 
-CREATE	NONCLUSTERED	INDEX	IX_セキュリティグループID_セキュリティグループ名	ON [dbo].[T_セキュリティグループ]([セキュリティグループID],[セキュリティグループ名])
+CREATE	NONCLUSTERED	INDEX	IX_セキュリティグループID_セキュリティグループ名称	ON [dbo].[T_セキュリティグループ]([セキュリティグループID],[セキュリティグループ名称])
 
 /*
 TRUNCATE TABLE [dbo].[T_セキュリティグループ]
 
 INSERT INTO [dbo].[T_セキュリティグループ]
 (
-         [セキュリティグループ名]
+         [セキュリティグループ名称]
 		,[登録日時]
 		,[登録者ID]  
 )
@@ -100,13 +100,13 @@ VALUES
 
 */
 
-SELECT	a.セキュリティグループ名
+SELECT	a.セキュリティグループ名称
        ,a.セキュリティグループID
 FROM	[dbo].[T_セキュリティグループ] AS a
-WHERE	a.セキュリティグループ名 LIKE N'%勤務%'
+WHERE	a.セキュリティグループ名称 LIKE N'%勤務%'
 
 
-SELECT	a.セキュリティグループ名
+SELECT	a.セキュリティグループ名称
        ,a.セキュリティグループID
 FROM	[dbo].[T_セキュリティグループ] AS a
-WHERE	a.セキュリティグループ名 LIKE N'%勤務%'
+WHERE	a.セキュリティグループ名称 LIKE N'%勤務%'

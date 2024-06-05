@@ -3,7 +3,7 @@ DROP TABLE	[dbo].[T_建物]
 CREATE TABLE	[dbo].[T_建物]
 (
 		 [建物ID]			int IDENTITY(1,1)	NOT	NULL
-		,[建物名]			NVARCHAR(128)		NOT NULL
+		,[建物名称]			NVARCHAR(128)		NOT NULL
 		,[登録日時]			datetime				NULL
 		,[登録者ID]			int 					NULL
 		,[更新日時]			datetime				NULL
@@ -24,14 +24,14 @@ CREATE TABLE	[dbo].[T_建物]
 ) ON [PRIMARY]
 GO
 
-CREATE	NONCLUSTERED	INDEX	IX_建物ID_建物名	ON [dbo].[T_建物]([建物ID],[建物名])
+CREATE	NONCLUSTERED	INDEX	IX_建物ID_建物名	ON [dbo].[T_建物]([建物ID],[建物名称])
 
 /*
 TRUNCATE TABLE [dbo].[T_建物]
 
 INSERT INTO [dbo].[T_建物]
 (
-         [建物名]
+         [建物名称]
 		,[登録日時]
 		,[登録者ID]  
 )
