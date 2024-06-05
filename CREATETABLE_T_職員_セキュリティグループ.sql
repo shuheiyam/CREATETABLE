@@ -737,6 +737,6 @@ FROM		[dbo].[T_職員_セキュリティグループ] AS a
     	    JOIN [dbo].[T_セキュリティグループ] AS c 
     	    ON      c.[セキュリティグループID] = a.セキュリティグループID
 -- WHERE   a.職員ID IN (56)
--- WHERE	c.セキュリティグループID = 10
+WHERE	c.セキュリティグループID = 41
 ORDER BY a.職員ID, a.セキュリティグループID
 

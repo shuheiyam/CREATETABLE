@@ -5,6 +5,8 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
+DROP TABLE	[dbo].[TEMP_ExportedAllUsers]
+
 CREATE TABLE	[dbo].[TEMP_ExportedAllUsers]
 (
 	 [職員ID]		int IDENTITY(1,1)	NOT NULL
