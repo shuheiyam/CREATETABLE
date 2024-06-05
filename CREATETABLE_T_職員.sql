@@ -146,7 +146,7 @@ SELECT	 a.[職員ID]
 		,c.雇用状態名称			AS 雇用状態
 		,d.職位名称				AS 職位
 		,h.所属
-		,e.建物名				AS 建物
+		,e.建物名称				AS 建物
 		,f.部屋名称				AS 居室			
 		,a.着任日
 		,a.適用日
@@ -155,14 +155,14 @@ SELECT	 a.[職員ID]
 		,a.更新日時
 		,a.更新者ID
 		,a.備考
-FROM		 [dbo].[T_職員] AS a
-			 LEFT JOIN dbo.T_固定電話内線 b 	ON b.固定電話内線ID = a.固定電話内線ID
-			 LEFT JOIN dbo.T_雇用状態 c 		ON c.雇用状態ID = a.雇用状態ID
-			 LEFT JOIN dbo.T_職位 d 			ON d.職位ID = a.職位ID
-			 LEFT JOIN dbo.T_建物 e 			ON e.建物ID = a.建物ID
-			 LEFT JOIN dbo.T_部屋 f 			ON f.部屋ID = a.居室ID
-			 LEFT JOIN dbo.T_組織 g 			ON g.組織ID = a.組織ID
-			 JOIN Syozoku h						ON h.職員ID = a.職員ID
+FROM	 [dbo].[T_職員] AS a
+		 LEFT JOIN dbo.T_固定電話内線 b 	ON b.固定電話内線ID = a.固定電話内線ID
+		 LEFT JOIN dbo.T_雇用状態 c 		ON c.雇用状態ID = a.雇用状態ID
+		 LEFT JOIN dbo.T_職位 d 			ON d.職位ID = a.職位ID
+		 LEFT JOIN dbo.T_建物 e 			ON e.建物ID = a.建物ID
+		 LEFT JOIN dbo.T_部屋 f 			ON f.部屋ID = a.居室ID
+		 LEFT JOIN dbo.T_組織 g 			ON g.組織ID = a.組織ID
+		 JOIN Syozoku h						ON h.職員ID = a.職員ID
 ORDER BY	a.[職員ID]
 */
 
