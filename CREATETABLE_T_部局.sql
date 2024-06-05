@@ -74,26 +74,3 @@ VALUES
 SELECT	*
 FROM	[dbo].[T_部局]
 */
-WITH 部局階層 AS (
-    -- ベースケース: 親カテゴリーがNULLの、つまり最上位のカテゴリーを選択
-    SELECT	 部局ID
-            ,部局名称
-            ,親部局ID
-            ,CAST(部局名称 AS NVARCHAR(MAX)) AS 部局
-    FROM	 T_部局
-    WHERE	 親部局ID IS NULL
-
-    UNION ALL
-
-    -- 再帰的ケース: 上で選択したカテゴリーを親とするサブカテゴリーを選択し、パスに追加
-    SELECT	 c.部局ID
-            ,c.部局名称
-            ,c.親部局ID
-            ,CAST(p.部局 + ' / ' + c.部局名称 AS NVARCHAR(MAX)) AS 部局
-    FROM	 T_部局 c
-    		 JOIN 部局階層 p
-		 ON	 c.親部局ID = p.部局ID
-)
-SELECT		 *
-FROM		 部局階層
-

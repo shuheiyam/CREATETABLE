@@ -728,14 +728,15 @@ VALUES
  ( 54 ,0, 10 ,GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
 
 */
-SELECT	b.表示名
-       ,c.[セキュリティグループ名]
-FROM	[dbo].[T_職員_セキュリティグループ] AS a
-        JOIN [dbo].[T_職員] AS b 
-        ON      b.職員ID = a.職員ID
-        JOIN [dbo].[T_セキュリティグループ] AS c 
-        ON      c.[セキュリティグループID] = a.セキュリティグループID
+SELECT	    b.職員ID
+		   ,b.表示名
+    	   ,c.[セキュリティグループ名]
+FROM		[dbo].[T_職員_セキュリティグループ] AS a
+    	    JOIN [dbo].[T_職員] AS b 
+    	    ON      b.職員ID = a.職員ID
+    	    JOIN [dbo].[T_セキュリティグループ] AS c 
+    	    ON      c.[セキュリティグループID] = a.セキュリティグループID
 -- WHERE   a.職員ID IN (56)
-WHERE	c.セキュリティグループID = 10
+-- WHERE	c.セキュリティグループID = 10
 ORDER BY a.職員ID, a.セキュリティグループID
 

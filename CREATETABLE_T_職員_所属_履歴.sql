@@ -5,7 +5,6 @@ CREATE TABLE	[dbo].[T_職員_所属_履歴]
          [AutoNumberID]     INT IDENTITY(1,1)   NOT NULL
 		,[職員ID]			int			        NOT NULL
 		,[所属ID]			nchar(2)			NOT	NULL
-		,[部課ID]			NCHAR(2)				NULL
 		,[所属設定日]		date					NULL
 		,[所属終了日]		date					NULL
 		,[登録日時]			datetime				NULL
