@@ -168,3 +168,6 @@ SELECT		*
 FROM		[dbo].[T_職員] AS a
 WHERE		a.表示名 LIKE N'%柳場%'
 
+SELECT		所属ID
+		   ,所属
+FROM		[viewer].[所属ID_所属]
