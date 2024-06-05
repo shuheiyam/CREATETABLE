@@ -113,9 +113,10 @@ FROM	 [dbo].[TEMP_USR_職員] AS a
 		 LEFT JOIN [dbo].T_建物 AS e 			ON	e.建物名 = a.建物
 		 LEFT JOIN [dbo].T_部屋 f 				ON	f.部屋名 = a.居室
 		 LEFT JOIN [dbo].T_組織 g 				ON g.組織名称 = a.組織
+*/
 
+/****
 -- 結合例
-
 WITH Syozoku AS
 (
 	SELECT	 a.職員ID
@@ -128,32 +129,32 @@ WITH Syozoku AS
 				ON 	c.部局ID = b.所属ID
 )
 SELECT	 a.[職員ID]
-		,[SyncUser]
-		,[有効]
-		,[姓]
-		,[名]
-		,[姓カナ]
-		,[名カナ]
-		,[FamilyName]
-		,[FirstName]
-		,[表示名]
+		,a.SyncUser
+		,a.有効
+		,a.姓
+		,a.名
+		,a.姓カナ
+		,a.名カナ
+		,a.FamilyName
+		,a.FirstName
+		,a.表示名
 		,b.固定電話内線番号
-		,[PHS]
-		,[UserPrincipalName]
-		,[Email]
+		,a.PHS
+		,a.UserPrincipalName	AS UPN
+		,a.Email
+		,g.組織名称
 		,c.雇用状態名称			AS 雇用状態
 		,d.職位名称				AS 職位
 		,h.所属
 		,e.建物名				AS 建物
 		,f.部屋名称				AS 居室			
-		,g.組織名称
-		,a.[着任日]
-		,a.[適用日]
-		,a.[登録日時]
+		,a.着任日
+		,a.適用日
+		,a.登録日時
 		,a.登録者ID
-		,a.[更新日時]
+		,a.更新日時
 		,a.更新者ID
-		,a.[備考]
+		,a.備考
 FROM		 [dbo].[T_職員] AS a
 			 LEFT JOIN dbo.T_固定電話内線 b 	ON b.固定電話内線ID = a.固定電話内線ID
 			 LEFT JOIN dbo.T_雇用状態 c 		ON c.雇用状態ID = a.雇用状態ID
@@ -163,10 +164,10 @@ FROM		 [dbo].[T_職員] AS a
 			 LEFT JOIN dbo.T_組織 g 			ON g.組織ID = a.組織ID
 			 JOIN Syozoku h						ON h.職員ID = a.職員ID
 ORDER BY	a.[職員ID]
-
 */
 
+/*
 SELECT		*
 FROM		[dbo].[T_職員] AS a
 WHERE		a.表示名 LIKE N'%緒方%'
-
+*/
