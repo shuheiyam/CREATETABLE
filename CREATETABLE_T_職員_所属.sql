@@ -73,7 +73,8 @@ SET 	所属ID = 26
 WHERE 	職員ID IN (118,119)
 
 /* 検証 */
-SELECT		a.職員ID
+SELECT	    b.AutoNumberID
+		   ,a.職員ID
 		   ,a.表示名
 		   ,b.所属ID
 		   ,c.部局			AS 所属
@@ -83,6 +84,7 @@ FROM 		dbo.T_職員 AS a
 			LEFT JOIN viewer.部局ID_部局 AS c 
 			ON 	c.部局ID = b.所属ID
 ORDER BY	a.職員ID
+
 
 
 
