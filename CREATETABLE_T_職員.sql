@@ -17,7 +17,7 @@ CREATE TABLE	[dbo].[T_職員]
 		,[UserPrincipalName]	nvarchar(128)				NULL
 		,[Email]				nvarchar(128)				NULL	
 		,[雇用状態ID]			int							NULL
-		,[職位ID]				int							NULL
+		-- ,[職名ID]				int							NULL
 		,[建物ID]				int 						NULL
 		,[居室ID]				int							NULL
 		,[組織ID]				INT							NULL
@@ -50,7 +50,6 @@ CREATE	NONCLUSTERED	INDEX [IX_姓名]				ON [dbo].[T_職員]([姓],[名])
 CREATE	NONCLUSTERED	INDEX [IX_姓名カナ]			ON [dbo].[T_職員]([姓カナ],[名カナ]) 
 CREATE	NONCLUSTERED	INDEX [IX_FullName]			ON [dbo].[T_職員]([Surname],[GivenName])
 
-
 TRUNCATE TABLE [dbo].[T_職員]
 
 INSERT [dbo].[T_職員]
@@ -69,7 +68,7 @@ INSERT [dbo].[T_職員]
 		,[UserPrincipalName]
 		,[Email]
 		,[雇用状態ID]
-		,[職位ID]
+		-- ,[職名ID]
 		,[建物ID]
 		,[居室ID]
 		,[組織ID]
@@ -95,7 +94,7 @@ SELECT	 [SyncUser]
 		,a.[UPN]
 		,a.[EMail]
 		,c.[雇用状態ID]
-		,d.[職位ID]
+		-- ,d.[職名ID]
 		,e.[建物ID]
 		,f.部屋ID
 		,g.[組織ID]
@@ -108,7 +107,7 @@ SELECT	 [SyncUser]
 		,NULL
 FROM	 [dbo].TEMP_ExportedAllUsers AS a 
 		 LEFT JOIN [dbo].[T_雇用状態] AS c	ON	c.雇用状態名称 = a.雇用状態
-		 LEFT JOIN [dbo].[T_職位] AS d			ON	d.職位名称 = a.職位
+		--  LEFT JOIN [dbo].[T_職名] AS d			ON	d.職名名称 = a.職名
 		 LEFT JOIN [dbo].T_建物 AS e 			ON	e.建物名称 = a.建物
 		 LEFT JOIN [dbo].T_部屋 f 				ON	f.部屋名称 = a.部屋番号
 		 LEFT JOIN [dbo].T_組織 g 				ON g.組織名称 = a.組織
@@ -118,13 +117,16 @@ FROM	 [dbo].TEMP_ExportedAllUsers AS a
 WITH Syozoku AS
 (
 	SELECT	 a.職員ID
+			,b.職名ID
 			,b.所属ID
 			,c.部局			AS 所属
+			,b.所属設定日
 	FROM 		dbo.T_職員 AS a 
-				LEFT JOIN 	dbo.T_職員_所属 AS b 
-				ON 	b.職員ID = a.職員ID
+				LEFT JOIN dbo.T_職員_所属_職名 AS b 
+				ON		b.職員ID = a.職員ID
+					And b.併任 = 0
 				LEFT JOIN viewer.部局ID_部局 AS c 
-				ON 	c.部局ID = b.所属ID
+				ON 		c.部局ID = b.所属ID
 )
 SELECT	 a.[職員ID]
 		,a.SyncUser
@@ -136,16 +138,17 @@ SELECT	 a.[職員ID]
 		,a.Surname
 		,a.GivenName
 		,a.表示名
-		,固定電話内線
+		,a.固定電話内線
 		,a.PHS
 		,a.UserPrincipalName	AS UPN
 		,a.Email
-		,g.組織名称
-		,c.雇用状態名称			AS 雇用状態
-		,d.職位名称				AS 職位
-		,h.所属
-		,e.建物名称				AS 建物
-		,f.部屋名称				AS 居室			
+		,e.組織名称
+		,b.雇用状態名称			AS 雇用状態
+		,g.職名
+		,f.所属
+		,f.所属設定日
+		,c.建物名称				AS 建物
+		,d.部屋名称				AS 居室			
 		,a.着任日
 		,a.適用日
 		,a.登録日時
@@ -153,20 +156,15 @@ SELECT	 a.[職員ID]
 		,a.更新日時
 		,a.更新者ID
 		,a.備考
-FROM	 [dbo].[T_職員] AS a
-		 LEFT JOIN dbo.T_雇用状態 c 		ON c.雇用状態ID = a.雇用状態ID
-		 LEFT JOIN dbo.T_職位 d 			ON d.職位ID = a.職位ID
-		 LEFT JOIN dbo.T_建物 e 			ON e.建物ID = a.建物ID
-		 LEFT JOIN dbo.T_部屋 f 			ON f.部屋ID = a.居室ID
-		 LEFT JOIN dbo.T_組織 g 			ON g.組織ID = a.組織ID
-		 JOIN Syozoku h						ON h.職員ID = a.職員ID
-ORDER BY	a.[職員ID]
-
-/*
-SELECT		*
-FROM		[dbo].[T_職員] AS a
-WHERE		a.表示名 LIKE N'%緒方%'
-*/
+FROM	 dbo.T_職員 AS a
+		 LEFT JOIN dbo.T_雇用状態 b 		ON b.雇用状態ID = a.雇用状態ID
+		 LEFT JOIN dbo.T_建物 c 			ON c.建物ID = a.建物ID
+		 LEFT JOIN dbo.T_部屋 d 			ON d.部屋ID = a.居室ID
+		 LEFT JOIN dbo.T_組織 e 			ON e.組織ID = a.組織ID
+		 JOIN Syozoku f						ON f.職員ID = a.職員ID
+		 LEFT JOIN dbo.T_職名 g 			ON g.職名ID = f.職名ID
+WHERE 	a.職員ID = 40
+ORDER BY	a.[姓カナ],a.[名カナ]
 
 /*  ユーザ登録例   */
 INSERT [dbo].[T_職員]
@@ -185,7 +183,7 @@ INSERT [dbo].[T_職員]
 		,[UserPrincipalName]
 		,[Email]
 		,[雇用状態ID]
-		,[職位ID]
+		-- ,[職名ID]
 		,[建物ID]
 		,[居室ID]
 		,[組織ID]
@@ -207,13 +205,13 @@ VALUES
 	,N'クミコ'
 	,N'IGARASHI'
 	,N'Kumiko'
-	,N'五十嵐　久美子 / IGARASHI Kumiko'
+	,N'五十嵐 久美子 / IGARASHI Kumiko'
 	,NULL
 	,NULL
 	,N'igarashi-kumiko@h.jniosh.johas.go.jp'
 	,N'igarashi-kumiko@h.jniosh.johas.go.jp'
 	,10
-	,NULL
+	-- ,NULL
 	,2
 	,214
 	,8
@@ -226,10 +224,12 @@ VALUES
 	,N'2024/6/6 加島さんから依頼を受けて先んじて登録'
 )
 
-INSERT INTO [dbo].[T_職員_所属]
+/* 所属 INSERT */
+INSERT INTO [dbo].[T_職員_所属_職名]
 (
 		 [職員ID]
 		,[所属ID]
+		,[併任]
 		,[所属設定日]
 		-- ,[所属終了日]
 		,[登録日時]
@@ -241,13 +241,14 @@ VALUES
 (
 		 198
 		,14
-		,'2024-06-06'
+		,0
+		,'2024-07-01'
 		-- ,[所属終了日]
 		,GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time'
 		,160
 )
 
+UPDATE 		dbo.T_職員
+SET 		備考 = N'R6年4月1日辞令より'
+WHERE 		職員ID IN (48,55) 
 
-DELETE
-FROM 		dbo.T_職員
-WHERE 		職員ID = 198

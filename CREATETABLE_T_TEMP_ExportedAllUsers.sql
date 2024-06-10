@@ -261,7 +261,7 @@ VALUES
 
 SELECT 		a.*
 FROM 		dbo.TEMP_ExportedAllUsers AS a 
-WHERE 		a.[部屋番号] IS NOT NULL
+-- WHERE 		a.[部屋番号] IS NOT NULL
 ORDER BY 	a.職員ID
 
 SELECT 		a.建物

@@ -1,16 +1,16 @@
-DROP TABLE	[dbo].[T_職位]
+DROP TABLE	[dbo].[T_職名]
 
-CREATE TABLE	[dbo].[T_職位]
+CREATE TABLE	[dbo].[T_職名]
 (
-		 [職位ID]			int IDENTITY(1,1)		NOT	NULL
-		,[職位名称]			nvarchar(128)			NULL	-- 姓
+		 [職名ID]			int IDENTITY(1,1)		NOT	NULL
+		,[職名]				nvarchar(128)			NULL	-- 姓
 		,[登録日時]			datetime				NULL
 		,[登録者ID]			int 					NULL
 		,[更新日時]			datetime				NULL
 		,[更新者ID]			int 					NULL
-		 CONSTRAINT [PK_T_職位] PRIMARY KEY CLUSTERED 
+		 CONSTRAINT [PK_T_職名] PRIMARY KEY CLUSTERED 
 		 (
-			 [職位ID] ASC
+			 [職名ID] ASC
 		 )
 		 WITH
 		 (
@@ -24,14 +24,14 @@ CREATE TABLE	[dbo].[T_職位]
 ) ON [PRIMARY]
 GO
 
-CREATE INDEX	IX_職位名称		ON [dbo].[T_職位]([職位名称])
+CREATE INDEX	IX_職名		ON [dbo].[T_職名]([職名])
 
 /*
-TRUNCATE TABLE [dbo].[T_職位]
+TRUNCATE TABLE [dbo].[T_職名]
 
-INSERT INTO [dbo].[T_職位]
+INSERT INTO [dbo].[T_職名]
 (
-		 [職位名称]
+		 [職名]
 		,[登録日時]
 		,[登録者ID]
 )
@@ -64,6 +64,9 @@ VALUES
 ,(N'研究員',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
 ,(N'調査役',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
 ,(N'首席研究員',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
+
+SELECT		*
+FROM		[dbo].[T_職名]
 
 */
 

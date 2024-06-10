@@ -10,22 +10,16 @@ CREATE TABLE	[dbo].[T_職員_履歴]
 		,[名]					nvarchar(64)				NULL	-- 名
 		,[姓カナ]				nvarchar(64)				NULL	-- 姓カナ
 		,[名カナ]				nvarchar(64)				NULL	-- 名カナ
-		,[FamilyName]			nvarchar(64)				NULL	-- Family Name
-		,[FirstName]			nvarchar(64)				NULL	-- First Name
+		,[Surname]				nvarchar(64)				NULL	-- Family Name
+		,[GivenName]			nvarchar(64)				NULL	-- First Name
 		,[表示名]				NVARCHAR(128)				NULL
-		,[固定電話内線ID]		INT							NULL
+		,[固定電話内線]			nchar(3)					NULL
 		,[PHS]					nchar(4)					NULL
-		-- ,[UserPrincipalName]	nvarchar(128)				NULL
 		,[Email]				nvarchar(128)				NULL	
 		,[雇用状態ID]			int							NULL
-		,[職位ID]				int							NULL
 		,[建物ID]				int 						NULL
 		,[居室ID]				int							NULL
 		,[組織ID]				INT							NULL
-		-- ,[着任日]				date						NULL
-		-- ,[適用日]				date						NULL
-		-- ,[登録日時]				datetime					NULL
-		-- ,[登録者ID]				int							NULL
 		,[履歴作成日時]				datetime					NULL
 		,[履歴作成者ID]				int							NULL
 		,[備考]					NVARCHAR(max)				NULL
@@ -49,5 +43,55 @@ GO
 CREATE					INDEX [IX_表示名]			ON [dbo].[T_職員_履歴]([表示名])
 CREATE	NONCLUSTERED	INDEX [IX_姓名]				ON [dbo].[T_職員_履歴]([姓],[名]) 
 CREATE	NONCLUSTERED	INDEX [IX_姓名カナ]			ON [dbo].[T_職員_履歴]([姓カナ],[名カナ]) 
-CREATE	NONCLUSTERED	INDEX [IX_FullName]			ON [dbo].[T_職員_履歴]([FamilyName],[FirstName])
+CREATE	NONCLUSTERED	INDEX [IX_FullName]			ON [dbo].[T_職員_履歴]([Surname],[GivenName])
 
+
+INSERT INTO dbo.T_職員_履歴
+(
+		 [職員ID]
+		,[SyncUser]
+		,[有効]
+		,[姓]
+		,[名]
+		,[姓カナ]
+		,[名カナ]
+		,[Surname]
+		,[GivenName]
+		,[表示名]
+		,[固定電話内線]
+		,[PHS]
+		,[Email]
+		,[雇用状態ID]
+		,[建物ID]
+		,[居室ID]
+		,[組織ID]
+		,[履歴作成日時]
+		,[履歴作成者ID]
+		,[備考]
+)
+SELECT	 [職員ID]
+		,[SyncUser]
+		,[有効]
+		,[姓]
+		,[名]
+		,[姓カナ]
+		,[名カナ]
+		,[Surname]
+		,[GivenName]
+		,[表示名]
+		,[固定電話内線]
+		,[PHS]
+		,[Email]
+		,[雇用状態ID]
+		,[建物ID]
+		,[居室ID]
+		,[組織ID]
+		,GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time'
+		,160
+		,N'R6年4月1日辞令より'
+FROM	 dbo.T_職員
+WHERE 	 職員ID = 40
+
+
+SELECT		*
+FROM 		dbo.T_職員_履歴
