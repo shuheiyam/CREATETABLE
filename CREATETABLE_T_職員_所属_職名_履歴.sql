@@ -27,7 +27,8 @@ CREATE TABLE	[dbo].[T_職員_所属_職名_履歴]
 ) ON [PRIMARY]
 GO
 
-
+/*
+[登録例]
 INSERT INTO dbo.T_職員_所属_職名_履歴
 (
 		 [職員ID]
@@ -50,6 +51,8 @@ SELECT	 [職員ID]
 FROM        dbo.T_職員_所属_職名
 WHERE       職員ID = 92
 
-
 SELECT      *
 FROM        dbo.T_職員_所属_職名_履歴
+
+*/
+

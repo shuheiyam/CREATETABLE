@@ -45,7 +45,8 @@ CREATE	NONCLUSTERED	INDEX [IX_姓名]				ON [dbo].[T_職員_履歴]([姓],[名])
 CREATE	NONCLUSTERED	INDEX [IX_姓名カナ]			ON [dbo].[T_職員_履歴]([姓カナ],[名カナ]) 
 CREATE	NONCLUSTERED	INDEX [IX_FullName]			ON [dbo].[T_職員_履歴]([Surname],[GivenName])
 
-
+/*
+[登録例]
 INSERT INTO dbo.T_職員_履歴
 (
 		 [職員ID]
@@ -95,3 +96,5 @@ WHERE 	 職員ID = 40
 
 SELECT		*
 FROM 		dbo.T_職員_履歴
+
+*/

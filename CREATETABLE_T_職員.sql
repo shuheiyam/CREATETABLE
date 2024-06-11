@@ -50,6 +50,8 @@ CREATE	NONCLUSTERED	INDEX [IX_姓名]				ON [dbo].[T_職員]([姓],[名])
 CREATE	NONCLUSTERED	INDEX [IX_姓名カナ]			ON [dbo].[T_職員]([姓カナ],[名カナ]) 
 CREATE	NONCLUSTERED	INDEX [IX_FullName]			ON [dbo].[T_職員]([Surname],[GivenName])
 
+/*
+-- 0 から登録
 TRUNCATE TABLE [dbo].[T_職員]
 
 INSERT [dbo].[T_職員]
@@ -111,8 +113,9 @@ FROM	 [dbo].TEMP_ExportedAllUsers AS a
 		 LEFT JOIN [dbo].T_建物 AS e 			ON	e.建物名称 = a.建物
 		 LEFT JOIN [dbo].T_部屋 f 				ON	f.部屋名称 = a.部屋番号
 		 LEFT JOIN [dbo].T_組織 g 				ON g.組織名称 = a.組織
+*/
 
-
+/*
 -- 結合例
 WITH Syozoku AS
 (
@@ -165,8 +168,15 @@ FROM	 dbo.T_職員 AS a
 		 LEFT JOIN dbo.T_職名 g 			ON g.職名ID = f.職名ID
 WHERE 	a.職員ID = 40
 ORDER BY	a.[姓カナ],a.[名カナ]
+*/
 
-/*  ユーザ登録例   */
+
+/*   
+	登録手順
+	1) dbo.T_職員に INSERT
+	2) dbo.T_職員_所属 に INSERT
+
+[ユーザ登録例]
 INSERT [dbo].[T_職員]
 (
 		 [SyncUser]
@@ -224,7 +234,8 @@ VALUES
 	,N'2024/6/6 加島さんから依頼を受けて先んじて登録'
 )
 
-/* 所属 INSERT */
+
+[所属 INSERT 例]
 INSERT INTO [dbo].[T_職員_所属_職名]
 (
 		 [職員ID]
@@ -248,7 +259,5 @@ VALUES
 		,160
 )
 
-UPDATE 		dbo.T_職員
-SET 		備考 = N'R6年4月1日辞令より'
-WHERE 		職員ID IN (48,55) 
+*/
 

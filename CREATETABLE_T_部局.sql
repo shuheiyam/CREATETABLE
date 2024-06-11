@@ -70,29 +70,7 @@ VALUES
 ,(N'登戸分室',15,GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
 ,(N'動物管理室',7,GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
 ,(N'図書',3,GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
+,(N'査察室',NULL,GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
+,(N'労働災害調査分析センター',NULL,GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
 
-INSERT INTO [dbo].[T_部局]
-(
-		 [部局名称]
-        ,[親部局ID]
-		,[登録日時]
-		,[登録者ID]  
-)
-VALUES
-(N'査察室',NULL,GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
-
-
-INSERT INTO [dbo].[T_部局]
-(
-		 [部局名称]
-        ,[親部局ID]
-		,[登録日時]
-		,[登録者ID]  
-)
-VALUES
- (N'労働災害調査分析センター',NULL,GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
-
-SELECT	*
-FROM	[dbo].[T_部局]
-WHERE	部局名称 LIKE N'%労働%'
 */
