@@ -36,34 +36,19 @@ INSERT INTO [dbo].[T_組織]
 		,[登録者ID]  
 )
 VALUES
-　(N'労働安全衛生総合研究所',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
-,(N'労働者健康安全機構',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
-,(N'厚生労働省',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
-,(N'一般財団法人日本規格協会',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
-,(N'株式会社ＪＰキャリアコンサルティング',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
-,(N'ＷＤＢ株式会社',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
-,(N'株式会社アニマルケア',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
-,(N'株式会社エルコーエイ',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
-,(N'株式会社スタッフサービス',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
-,(N'パーソルテンプスタッフ株式会社',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
-,(N'株式会社ハーフタイム',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',160)
+　(N'労働安全衛生総合研究所',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',186)
+,(N'労働者健康安全機構',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',186)
+,(N'厚生労働省',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',186)
+,(N'一般財団法人日本規格協会',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',186)
+,(N'株式会社ＪＰキャリアコンサルティング',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',186)
+,(N'ＷＤＢ株式会社',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',186)
+,(N'株式会社アニマルケア',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',186)
+,(N'株式会社エルコーエイ',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',186)
+,(N'株式会社スタッフサービス',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',186)
+,(N'パーソルテンプスタッフ株式会社',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',186)
+,(N'株式会社ハーフタイム',GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time',186)
 
 SELECT	*
 FROM	[dbo].[T_組織]
 */
-
-
-SELECT		[組織]
-FROM 		[dbo].[TEMP_USR_職員]
-GROUP BY    [組織]
-
-UPDATE		[dbo].[TEMP_USR_職員]
-SET			[組織] = N'株式会社エルコーエイ'
-WHERE		[組織] = N'エルコーエイ'
-
-UPDATE		[dbo].[TEMP_USR_職員]
-SET			[組織] = N'株式会社アニマルケア'
-WHERE		[組織] = N'アニマルケア'
-
-
 

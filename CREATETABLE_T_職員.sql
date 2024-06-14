@@ -3,6 +3,7 @@ DROP TABLE	[dbo].[T_職員]
 CREATE TABLE	[dbo].[T_職員]
 (
 		 [職員ID]				INT	IDENTITY(1,1)		NOT NULL
+		,[拠点ID]				NCHAR(1)					NULL
 		,[SyncUser]				BIT						NOT NULL
 		,[有効]					bit						NOT NULL
 		,[姓]					nvarchar(64)				NULL	-- 姓
@@ -15,11 +16,10 @@ CREATE TABLE	[dbo].[T_職員]
 		,[固定電話内線]			nchar(3)					NULL
 		,[PHS]					nchar(4)					NULL
 		,[UserPrincipalName]	nvarchar(128)				NULL
-		,[Email]				nvarchar(128)				NULL	
+		,[Email]				nvarchar(128)				NULL
 		,[雇用状態ID]			int							NULL
-		-- ,[職名ID]				int							NULL
 		,[建物ID]				int 						NULL
-		,[居室ID]				int							NULL
+		,[部屋ID]				int							NULL
 		,[組織ID]				INT							NULL
 		,[着任日]				date						NULL
 		,[適用日]				date						NULL
@@ -56,7 +56,8 @@ TRUNCATE TABLE [dbo].[T_職員]
 
 INSERT [dbo].[T_職員]
 (
-		 [SyncUser]
+	     [拠点ID]
+		,[SyncUser]
 		,[有効]
 		,[姓]
 		,[名]
@@ -70,68 +71,63 @@ INSERT [dbo].[T_職員]
 		,[UserPrincipalName]
 		,[Email]
 		,[雇用状態ID]
-		-- ,[職名ID]
 		,[建物ID]
-		,[居室ID]
+		,[部屋ID]
 		,[組織ID]
-		,[着任日]
-		,[適用日]
 		,[登録日時]
 		,[登録者ID]
-		,[更新日時]
-		,[更新者ID]
-		,[備考]
 )
-SELECT	 [SyncUser]
+SELECT	 [拠点ID]
+		,[SyncUser]
 		,[有効]
 		,[姓]
 		,[名]
 		,[姓カナ]
 		,[名カナ]
-		,a.FamilyName
-		,a.FirstName
-		,[表示名]
+		,a.Surname
+		,a.GIvenName
+		,[姓] + ' ' + [名] + ' / ' + [SurName] + ' ' + [GivenName]    AS 表示名
 		,a.固定電話内線
 		,a.[PHS]
 		,a.[UPN]
 		,a.[EMail]
 		,c.[雇用状態ID]
-		-- ,d.[職名ID]
 		,e.[建物ID]
 		,f.部屋ID
 		,g.[組織ID]
-		,NULL
-		,NULL
 		,GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time'
-		,160
-		,NULL
-		,NULL
-		,NULL
+		,186
 FROM	 [dbo].TEMP_ExportedAllUsers AS a 
-		 LEFT JOIN [dbo].[T_雇用状態] AS c	ON	c.雇用状態名称 = a.雇用状態
-		--  LEFT JOIN [dbo].[T_職名] AS d			ON	d.職名名称 = a.職名
-		 LEFT JOIN [dbo].T_建物 AS e 			ON	e.建物名称 = a.建物
-		 LEFT JOIN [dbo].T_部屋 f 				ON	f.部屋名称 = a.部屋番号
-		 LEFT JOIN [dbo].T_組織 g 				ON g.組織名称 = a.組織
+		 LEFT JOIN [dbo].[T_雇用状態] AS c	ON c.雇用状態名称 = a.雇用状態
+		 LEFT JOIN [dbo].T_建物 AS e 		ON e.建物名称 = a.建物
+		 LEFT JOIN [dbo].T_部屋 AS f		ON f.部屋名称 = a.部屋
+		 LEFT JOIN [dbo].T_組織 AS g		ON g.組織名称 = a.組織
+ORDER BY 姓カナ,名カナ
+
+-- 研推首席は不要
+DELETE
+FROM 		dbo.T_職員
+WHERE 		職員ID = 58
 */
 
-/*
--- 結合例
+
+/*  結合例 
 WITH Syozoku AS
 (
 	SELECT	 a.職員ID
 			,b.職名ID
-			,b.所属ID
-			,c.部局			AS 所属
-			,b.所属設定日
+			,b.部局ID
+			,c.部局
+			,b.部局設定日
 	FROM 		dbo.T_職員 AS a 
-				LEFT JOIN dbo.T_職員_所属_職名 AS b 
+				LEFT JOIN dbo.T_職員_部局_職名 AS b 
 				ON		b.職員ID = a.職員ID
 					And b.併任 = 0
 				LEFT JOIN viewer.部局ID_部局 AS c 
-				ON 		c.部局ID = b.所属ID
+				ON 		c.部局ID = b.部局ID
 )
 SELECT	 a.[職員ID]
+		,b.拠点名称		AS 拠点
 		,a.SyncUser
 		,a.有効
 		,a.姓
@@ -145,13 +141,13 @@ SELECT	 a.[職員ID]
 		,a.PHS
 		,a.UserPrincipalName	AS UPN
 		,a.Email
-		,e.組織名称
-		,b.雇用状態名称			AS 雇用状態
-		,g.職名
-		,f.所属
-		,f.所属設定日
-		,c.建物名称				AS 建物
-		,d.部屋名称				AS 居室			
+		,f.組織名称
+		,c.雇用状態名称			AS 雇用状態
+		,g.部局
+		,h.職名
+		,g.部局設定日
+		,d.建物名称				AS 建物
+		,e.部屋名称				AS 部屋			
 		,a.着任日
 		,a.適用日
 		,a.登録日時
@@ -160,16 +156,16 @@ SELECT	 a.[職員ID]
 		,a.更新者ID
 		,a.備考
 FROM	 dbo.T_職員 AS a
-		 LEFT JOIN dbo.T_雇用状態 b 		ON b.雇用状態ID = a.雇用状態ID
-		 LEFT JOIN dbo.T_建物 c 			ON c.建物ID = a.建物ID
-		 LEFT JOIN dbo.T_部屋 d 			ON d.部屋ID = a.居室ID
-		 LEFT JOIN dbo.T_組織 e 			ON e.組織ID = a.組織ID
-		 JOIN Syozoku f						ON f.職員ID = a.職員ID
-		 LEFT JOIN dbo.T_職名 g 			ON g.職名ID = f.職名ID
-WHERE 	a.職員ID = 40
-ORDER BY	a.[姓カナ],a.[名カナ]
+		 	  JOIN dbo.T_拠点 b 		ON b.拠点ID = a.拠点ID 
+		 LEFT JOIN dbo.T_雇用状態 c 	ON c.雇用状態ID = a.雇用状態ID
+		 LEFT JOIN dbo.T_建物 d 		ON d.建物ID = a.建物ID
+		 LEFT JOIN dbo.T_部屋 e 		ON e.部屋ID = a.部屋ID
+		 LEFT JOIN dbo.T_組織 f 		ON f.組織ID = a.組織ID
+		 LEFT JOIN Syozoku g			ON g.職員ID = a.職員ID
+		 LEFT JOIN dbo.T_職名 h 		ON h.職名ID = g.職名ID
+-- WHERE 	a.職員ID = 40
+ORDER BY	g.部局ID, CASE WHEN h.建制順 IS NULL THEN 100 ELSE h.建制順 END, CASE WHEN c.建制順 IS NULL THEN 100 ELSE c.建制順 END, a.姓カナ,a.名カナ
 */
-
 
 /*   
 	登録手順
@@ -235,11 +231,11 @@ VALUES
 )
 
 
-[所属 INSERT 例]
-INSERT INTO [dbo].[T_職員_所属_職名]
+-- [所属 INSERT 例]
+INSERT INTO [dbo].[T_職員_部局_職名]
 (
 		 [職員ID]
-		,[所属ID]
+		,[部局ID]
 		,[併任]
 		,[所属設定日]
 		-- ,[所属終了日]
@@ -251,13 +247,12 @@ INSERT INTO [dbo].[T_職員_所属_職名]
 VALUES
 (
 		 198
-		,14
+		,30
 		,0
 		,'2024-07-01'
 		-- ,[所属終了日]
 		,GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time'
 		,160
 )
-
 */
 

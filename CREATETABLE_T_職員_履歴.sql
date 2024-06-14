@@ -18,7 +18,7 @@ CREATE TABLE	[dbo].[T_職員_履歴]
 		,[Email]				nvarchar(128)				NULL	
 		,[雇用状態ID]			int							NULL
 		,[建物ID]				int 						NULL
-		,[居室ID]				int							NULL
+		,[部屋ID]				int							NULL
 		,[組織ID]				INT							NULL
 		,[履歴作成日時]				datetime					NULL
 		,[履歴作成者ID]				int							NULL
@@ -45,8 +45,9 @@ CREATE	NONCLUSTERED	INDEX [IX_姓名]				ON [dbo].[T_職員_履歴]([姓],[名])
 CREATE	NONCLUSTERED	INDEX [IX_姓名カナ]			ON [dbo].[T_職員_履歴]([姓カナ],[名カナ]) 
 CREATE	NONCLUSTERED	INDEX [IX_FullName]			ON [dbo].[T_職員_履歴]([Surname],[GivenName])
 
-/*
-[登録例]
+/* 
+TRUNCATE TABLE dbo.T_職員_履歴
+
 INSERT INTO dbo.T_職員_履歴
 (
 		 [職員ID]
@@ -64,7 +65,7 @@ INSERT INTO dbo.T_職員_履歴
 		,[Email]
 		,[雇用状態ID]
 		,[建物ID]
-		,[居室ID]
+		,[部屋ID]
 		,[組織ID]
 		,[履歴作成日時]
 		,[履歴作成者ID]
@@ -85,14 +86,13 @@ SELECT	 [職員ID]
 		,[Email]
 		,[雇用状態ID]
 		,[建物ID]
-		,[居室ID]
+		,[部屋ID]
 		,[組織ID]
 		,GETDATE() AT TIME ZONE 'UTC' AT TIME ZONE 'Tokyo Standard Time'
-		,160
+		,186
 		,N'R6年4月1日辞令より'
 FROM	 dbo.T_職員
-WHERE 	 職員ID = 40
-
+WHERE 	 職員ID IN ( 6, 16, 17, 25, 30, 38, 39, 44, 48, 51, 62, 70, 78, 85, 91, 93, 98, 100, 101, 106, 108, 109, 118, 126, 134, 139, 141, 142, 145, 153, 155, 156, 164, 167, 168, 169, 182, 186, 187, 190, 196 )
 
 SELECT		*
 FROM 		dbo.T_職員_履歴
