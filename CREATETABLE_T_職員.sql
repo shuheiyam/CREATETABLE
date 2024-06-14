@@ -118,6 +118,7 @@ WITH Syozoku AS
 			,b.職名ID
 			,b.部局ID
 			,c.部局
+			,c.表示順
 			,b.部局設定日
 	FROM 		dbo.T_職員 AS a 
 				LEFT JOIN dbo.T_職員_部局_職名 AS b 
@@ -164,7 +165,7 @@ FROM	 dbo.T_職員 AS a
 		 LEFT JOIN Syozoku g			ON g.職員ID = a.職員ID
 		 LEFT JOIN dbo.T_職名 h 		ON h.職名ID = g.職名ID
 -- WHERE 	a.職員ID = 40
-ORDER BY	g.部局ID, CASE WHEN h.建制順 IS NULL THEN 100 ELSE h.建制順 END, CASE WHEN c.建制順 IS NULL THEN 100 ELSE c.建制順 END, a.姓カナ,a.名カナ
+ORDER BY	g.表示順, CASE WHEN h.建制順 IS NULL THEN 100 ELSE h.建制順 END, CASE WHEN c.建制順 IS NULL THEN 100 ELSE c.建制順 END, a.姓カナ,a.名カナ
 */
 
 /*   
