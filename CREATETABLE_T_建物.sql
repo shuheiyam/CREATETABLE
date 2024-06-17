@@ -2,12 +2,12 @@ DROP TABLE	[dbo].[T_建物]
 
 CREATE TABLE	[dbo].[T_建物]
 (
-		 [建物ID]			int IDENTITY(1,1)	NOT	NULL
-		,[建物名称]			NVARCHAR(128)		NOT NULL
-		,[登録日時]			datetime				NULL
-		,[登録者ID]			int 					NULL
-		,[更新日時]			datetime				NULL
-		,[更新者ID]			int 					NULL
+		 [建物ID]		tinyint IDENTITY(1,1)	NOT	NULL
+		,[建物名称]		NVARCHAR(128)			NOT NULL
+		,[登録日時]		datetime					NULL
+		,[登録者ID]		int 						NULL
+		,[更新日時]		datetime					NULL
+		,[更新者ID]		int 						NULL
 		 CONSTRAINT [PK_T_建物] PRIMARY KEY CLUSTERED 
 		 (
 			 [建物ID] ASC

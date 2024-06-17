@@ -2,13 +2,13 @@ DROP TABLE	[dbo].[T_職名]
 
 CREATE TABLE	[dbo].[T_職名]
 (
-		 [職名ID]			int IDENTITY(1,1)	NOT	NULL
-		,[職名]				nvarchar(128)			NULL
-		,[建制順]			int 					NULL
-		,[登録日時]			datetime				NULL
-		,[登録者ID]			int 					NULL
-		,[更新日時]			datetime				NULL
-		,[更新者ID]			int 					NULL
+		 [職名ID]		tinyint IDENTITY(1,1)	NOT	NULL
+		,[職名]			nvarchar(128)				NULL
+		,[建制順]		tinyint 					NULL
+		,[登録日時]		datetime					NULL
+		,[登録者ID]		int 						NULL
+		,[更新日時]		datetime					NULL
+		,[更新者ID]		int 						NULL
 		 CONSTRAINT [PK_T_職名] PRIMARY KEY CLUSTERED 
 		 (
 			 [職名ID] ASC

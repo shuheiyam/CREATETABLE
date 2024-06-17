@@ -2,13 +2,13 @@ DROP TABLE	[dbo].[T_雇用状態]
 
 CREATE TABLE	[dbo].[T_雇用状態]
 (
-		 [雇用状態ID]		INT IDENTITY(1,1)	NOT	NULL
-		,[雇用状態名称]		nvarchar(128)			NULL
-		,[建制順]			int 					NULL
-		,[登録日時]			datetime				NULL
-		,[登録者ID]			int 					NULL
-		,[更新日時]			datetime				NULL
-		,[更新者ID]			int 					NULL
+		 [雇用状態ID]		tinyINT IDENTITY(1,1)	NOT	NULL
+		,[雇用状態名称]		nvarchar(128)				NULL
+		,[建制順]			int 						NULL
+		,[登録日時]			datetime					NULL
+		,[登録者ID]			int 						NULL
+		,[更新日時]			datetime					NULL
+		,[更新者ID]			int 						NULL
 		 CONSTRAINT [PK_T_雇用状態] PRIMARY KEY CLUSTERED 
 		 (
 			 [雇用状態ID] ASC

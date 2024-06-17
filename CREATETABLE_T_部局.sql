@@ -5,7 +5,7 @@ CREATE TABLE	[dbo].[T_部局]
 		 [部局ID]			int IDENTITY(1,1)	NOT	NULL
         ,[親部局ID]         int                     NULL
 		,[部局]			    NVARCHAR(128)		NOT NULL
-		,[表示順]			int 					NULL
+		,[表示順]			tinyint					NULL
 		,[登録日時]			datetime				NULL
 		,[登録者ID]			int 					NULL
 		,[更新日時]			datetime				NULL

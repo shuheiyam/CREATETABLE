@@ -2,12 +2,12 @@ DROP TABLE	[dbo].[T_拠点]
 
 CREATE TABLE	[dbo].[T_拠点]
 (
-		 [拠点ID]			int IDENTITY(1,1)	NOT	NULL
-		,[拠点名称]			NVARCHAR(64)		NOT NULL
-		,[登録日時]			datetime				NULL
-		,[登録者ID]			int 					NULL
-		,[更新日時]			datetime				NULL
-		,[更新者ID]			int 					NULL
+		 [拠点ID]		tinyint IDENTITY(1,1)	NOT	NULL
+		,[拠点名称]		NVARCHAR(64)			NOT NULL
+		,[登録日時]		datetime					NULL
+		,[登録者ID]		int 						NULL
+		,[更新日時]		datetime					NULL
+		,[更新者ID]		int 						NULL
 		 CONSTRAINT [PK_T_拠点] PRIMARY KEY CLUSTERED 
 		 (
 			 [拠点ID] ASC

@@ -7,7 +7,6 @@ DROP TABLE	[dbo].[T_職員_部局_職名]
 
 CREATE TABLE	[dbo].[T_職員_部局_職名]
 (
-		--  [AutoNumberID]     int IDENTITY(1,1)	NOT	NULL
 		 [職員ID]	        INT                 NOT NULL
 		,[併任]				BIT 				NOT NULL
         ,[部局ID]           INT                 NOT NULL
@@ -256,7 +255,8 @@ VALUES
 
 
 /*	ヤナギバ  ユキエ
-配置換 / 併任発令 / 併任解除 / 所長命
+配置換
+ / 併任発令 / 併任解除 / 所長命
 化学物質情報管理研究センター 有害性評価研究部 上席研究員
 (併)生体防御評価研究 室長
 (命)有害性評価研究 部長代理
@@ -509,14 +509,18 @@ SELECT  	a.職員ID
 FROM 		dbo.T_職員 AS a 
 			 LEFT JOIN dbo.T_職員_部局_職名 AS b 
 			 ON 	b.職員ID = a.職員ID
+			 	And b.併任 = 0
 			 	  JOIN dbo.T_部局 AS c 
 			 ON 	c.部局ID = b.部局ID
 			 LEFT JOIN dbo.T_職名 AS d 
 			 ON 	d.職名ID = b.職名ID
 			 LEFT JOIN dbo.T_雇用状態 AS e 
 			 ON 	e.雇用状態ID = a.雇用状態ID
-WHERE 		a.職員ID IN ( 91 )
-ORDER BY 	a.職員ID, c.部局ID
+-- WHERE 		a.職員ID IN ( 91 )
+ORDER BY 	c.表示順
+		   ,CASE WHEN d.建制順 IS NULL THEN 1000 ELSE d.建制順 END
+		   ,CASE WHEN e.建制順 IS NULL THEN 1000 ELSE e.建制順 END
+		   ,a.職員ID, c.部局ID
 
 /* 
 	更新手順（部局変更、職名(職位)変更）

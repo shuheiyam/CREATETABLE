@@ -104,10 +104,10 @@ FROM	 [dbo].TEMP_ExportedAllUsers AS a
 		 LEFT JOIN [dbo].T_組織 AS g		ON g.組織名称 = a.組織
 ORDER BY 姓カナ,名カナ
 
--- 研推首席は不要
+-- 研推首席、発表者用は不要
 DELETE
 FROM 		dbo.T_職員
-WHERE 		職員ID = 58
+WHERE 		職員ID IN ( 140, 58 )
 */
 
 
